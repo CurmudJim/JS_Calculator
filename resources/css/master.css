@@ -1,6 +1,6 @@
 body {
   font-family: monospace;
-  background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/asfalt.png");
+  background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/notebook.png");
   color: #0D0E0F;
 }
 
@@ -47,6 +47,7 @@ body {
 
 #screen {
   height: 15%;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.75);
   background-color: rgba(0, 0, 0, 0.75);
 }
