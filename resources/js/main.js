@@ -22,22 +22,44 @@ $(document).ready(function() {
 
 
   var inputScreenEl = document.getElementById("inputScreen");
+  var outputScreenEl = document.getElementById("outputScreen");
+  var clearEl = document.getElementById("clear");
   var backspaceEl = document.getElementById("backspace");
   var inputEls = document.querySelectorAll("#input .btn");
+  var equalEl = document.getElementById("equal");
 
   var onButtonClick = function(e) {
-    inputScreenEl.innerHTML += e.target.innerText;
+    if(e.target.innerText != "=") {
+      inputScreenEl.innerHTML += e.target.innerText;
+    }
   };
 
   inputEls.forEach (function(e) {
     e.addEventListener("click", onButtonClick)
   });
 
+  var equalClick = function() {
+    outputScreenEl.innerText = eval(inputScreenEl.innerText)
+  }
+
   var backspaceClick = function() {
       var content = inputScreenEl.innerText;
       inputScreenEl.innerText = content.substr(0, content.length - 1);
   }
 
+  var clearClick = function() {
+
+    outputScreenEl.innerText = "";
+    }
+
+  var equalClick = function() {
+    outputScreenEl.innerText = eval(inputScreenEl.innerText)
+    inputScreenEl.innerText = "";
+  }
+
+  equalEl.addEventListener("click", equalClick);
   backspaceEl.addEventListener("click", backspaceClick);
+  clearEl.addEventListener("click", clearClick);
+
 
 });

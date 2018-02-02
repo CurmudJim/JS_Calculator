@@ -4,27 +4,8 @@ body {
   color: #0D0E0F;
 }
 
-
-
-
-
-.jumbotron {
-  text-align: center;
-  width: 70rem;
-  margin: 2rem auto;
-  border-radius: .375rem;
-  border: solid .25rem rgb(13,14,15);
-  background-color: rgba(229,230,231,.25);
-}
-
-.jumbotron h1 {
-  font-size: 5em;
-  font-family: 'Rancho', cursive;
-}
-
-.input-group {
-  width: 20rem;
-  margin: 2rem auto 0 auto;
+.col-12 {
+  padding: 0;
 }
 
 .container {
