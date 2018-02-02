@@ -21,8 +21,7 @@ $(document).ready(function() {
   }
 
 
-  var inputScreenEl = document.getElementById("inputScreen");
-  var outputScreenEl = document.getElementById("outputScreen");
+  var screenEl = document.getElementById("screen");
   var clearEl = document.getElementById("clear");
   var backspaceEl = document.getElementById("backspace");
   var inputEls = document.querySelectorAll("#input .btn");
@@ -30,36 +29,48 @@ $(document).ready(function() {
 
   var onButtonClick = function(e) {
     if(e.target.innerText != "=") {
-      inputScreenEl.innerHTML += e.target.innerText;
+      screenEl.innerHTML += e.target.innerText;
     }
   };
 
   inputEls.forEach (function(e) {
-    e.addEventListener("click", onButtonClick)
+    e.addEventListener("click", onButtonClick);
   });
 
-  var equalClick = function() {
-    outputScreenEl.innerText = eval(inputScreenEl.innerText)
+  var backspaceAction = function() {
+      var content = screenEl.innerText;
+      screenEl.innerText = content.substr(0, content.length - 1);
   }
 
-  var backspaceClick = function() {
-      var content = inputScreenEl.innerText;
-      inputScreenEl.innerText = content.substr(0, content.length - 1);
-  }
-
-  var clearClick = function() {
-
-    outputScreenEl.innerText = "";
+  var clearAction = function() {
+    screenEl.innerText = "";
     }
 
-  var equalClick = function() {
-    outputScreenEl.innerText = eval(inputScreenEl.innerText)
-    inputScreenEl.innerText = "";
+  var equalAction = function() {
+
+    try {
+    screenEl.innerText = eval(screenEl.innerText);
+    }
+    catch(error) {
+      alert(error);
+    }
   }
 
-  equalEl.addEventListener("click", equalClick);
-  backspaceEl.addEventListener("click", backspaceClick);
-  clearEl.addEventListener("click", clearClick);
+  equalEl.addEventListener("clickdown", equalAction);
+  backspaceEl.addEventListener("click", backspaceAction);
+  clearEl.addEventListener("click", clearAction);
 
-
+  window.addEventListener('keydown', function(e) {
+    const keyEl = document.querySelector(`button[data-key="${e.keyCode}"]`);
+    if(!keyEl) return;
+    if(e.keyCode === 12) {
+      clearAction();
+    } else if (e.keyCode === 8) {
+      backspaceAction();
+    } else if (e.keyCode === 13) {
+      equalAction();
+    } else {
+      screenEl.innerHTML += e.key;
+    }
+  })
 });
