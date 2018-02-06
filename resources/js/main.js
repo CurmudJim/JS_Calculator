@@ -1,25 +1,36 @@
 $(document).ready(function() {
 
+  function calc(a,reducer) {
+    if (a.length > 0) {
+      return a.reduce(reducer);
+    } else {
+      return 0
+    }
+  }
+
   function sum(a) {
   	const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
-  	if (a.length > 0) {
-  		return a.reduce(reducer);
-  	} else {
-  		return 0
-  	}
+    return calc(a,reducer);
   }
 
   function difference(a) {
-  	const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  	const reducer = (accumulator, currentValue) => accumulator - currentValue;
 
-  	if (a.length > 0) {
-  		return a.reduce(reducer);
-  	} else {
-  		return 0
-  	}
+  	return calc(a,reducer);
   }
 
+  function multiply (a) {
+  	const reducer = (accumulator, currentValue) => accumulator * currentValue;
+
+  	return calc(a,reducer);
+  }
+
+  function divide (a) {
+  	const reducer = (accumulator, currentValue) => accumulator / currentValue;
+
+  	return calc(a,reducer);
+  }
 
   var screenEl = document.getElementById("screen");
   var clearEl = document.getElementById("clear");
@@ -47,7 +58,6 @@ $(document).ready(function() {
     }
 
   var equalAction = function() {
-
     try {
     screenEl.innerText = eval(screenEl.innerText);
     }
@@ -56,7 +66,7 @@ $(document).ready(function() {
     }
   }
 
-  equalEl.addEventListener("clickdown", equalAction);
+  equalEl.addEventListener("click", equalAction);
   backspaceEl.addEventListener("click", backspaceAction);
   clearEl.addEventListener("click", clearAction);
 
@@ -72,5 +82,5 @@ $(document).ready(function() {
     } else {
       screenEl.innerHTML += e.key;
     }
-  })
+  });
 });
