@@ -32,15 +32,23 @@ $(document).ready(function() {
   	return calc(a,reducer);
   }
 
-  var screenEl = document.getElementById("screen");
+  var equationEl = document.getElementById("equation");
+  var resultEl = document.getElementById("result");
   var clearEl = document.getElementById("clear");
   var backspaceEl = document.getElementById("backspace");
   var inputEls = document.querySelectorAll("#input .btn");
   var equalEl = document.getElementById("equal");
 
+  function precisionRound(number, precision) {
+    var factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
+  }
+
   var onButtonClick = function(e) {
     if(e.target.innerText != "=") {
-      screenEl.innerHTML += e.target.innerText;
+      if (equationEl.innerText.length <= 28) {
+        equationEl.innerHTML += e.target.innerText;
+      }
     }
   };
 
@@ -49,20 +57,37 @@ $(document).ready(function() {
   });
 
   var backspaceAction = function() {
-      var content = screenEl.innerText;
-      screenEl.innerText = content.substr(0, content.length - 1);
+      var content = equationEl.innerText;
+      equationEl.innerText = content.substr(0, content.length - 1);
+  }
+
+  var clearEquationAction = function() {
+    equationEl.innerText = "";
+    }
+  var clearResultAction = function() {
+    resultEl.innerText = "";
   }
 
   var clearAction = function() {
-    screenEl.innerText = "";
+    clearEquationAction();
+    clearResultAction();
     }
 
   var equalAction = function() {
-    try {
-    screenEl.innerText = eval(screenEl.innerText);
+    if (isNaN(equationEl.innerText[0]) && equationEl.innerText[0] != ".") {
+      var equation = resultEl.innerText + equationEl.innerText
+    } else {
+      clearResultAction();
+      var equation = equationEl.innerText
     }
+
+    try {
+      resultEl.innerText = precisionRound(eval(equation), 2);
+      clearEquationAction();
+      }
     catch(error) {
       alert(error);
+      clearEquationAction();
     }
   }
 
@@ -79,8 +104,8 @@ $(document).ready(function() {
       backspaceAction();
     } else if (e.keyCode === 13) {
       equalAction();
-    } else {
-      screenEl.innerHTML += e.key;
+    } else if (equationEl.innerText.length <= 28) {
+      equationEl.innerHTML += e.key;
     }
   });
 });
